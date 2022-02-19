@@ -55,7 +55,7 @@ namespace lab1wpf
         {
             for (int i=0;i<15; i++)
             {
-                if (this.birth.Year == 1900 + 12 * i) this.chineseSign = "Mice";
+                if (this.birth.Year == 1900 + 12 * i) this.chineseSign = "Mouse";
                 if (this.birth.Year == 1901 + 12 * i) this.chineseSign = "Bull";
                 if (this.birth.Year == 1902 + 12 * i) this.chineseSign = "Tiger";
                 if (this.birth.Year == 1903 + 12 * i) this.chineseSign = "Rabbit";

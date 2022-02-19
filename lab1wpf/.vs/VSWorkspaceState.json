@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\lab1wpf"
   ],
-  "SelectedNode": "\\lab1wpf.sln",
+  "SelectedNode": "\\lab1wpf\\Person.cs",
   "PreviewInSolutionExplorer": false
 }
