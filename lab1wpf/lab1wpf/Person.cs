@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,67 +10,113 @@ namespace lab1wpf
     public class Person
     {
         public DateTime birth;
-        public String westernSign;
-        public String chineseSign;
+        public string westernSign;
+        public string chineseSign;
+        public string name;
+        public string surname;
+        public string email;
+        public int age;
 
-        public Person(DateTime birth)
+
+        public Person(string name, string surname, DateTime birth, string email)
         {
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
             AddBirth(birth);
-            calculateWesternSign();
-            calculateChineseSign();
+            CalculateChineseSign();
+            CalculateWesternSign();
+            age = CalculateYears();
+        }
+
+        public Person(string name, string surname, string email)
+        {
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            CalculateChineseSign();
+            CalculateWesternSign();
+            age = CalculateYears();
+        }
+
+        public Person(string name, string surname, DateTime birth)
+        {
+            this.name = name;
+            this.surname = surname;
+            AddBirth(birth);
+            CalculateChineseSign();
+            CalculateWesternSign();
+            age = CalculateYears();
+        }
+
+        public bool IsAdult()
+        {
+            return age >= 18;
+        }
+
+        public string SunSign()
+        {
+            return westernSign;
+        }
+
+        public string ChineseSign()
+        {
+            return chineseSign;
+        }
+
+        public bool IsBirthday()
+        {
+            return birth.Day == DateTime.Today.Day && birth.Month == DateTime.Today.Month;
         }
 
         private void AddBirth(DateTime birth)
         {
-            if (birth>DateTime.Today || birth.Year < 1900) Console.WriteLine("Wrong date of birth");
+            if (birth > DateTime.Today || birth.Year < 1900) Console.WriteLine("Wrong date of birth");
             else this.birth = birth;
-
         }
 
-        public int CalculateYears()
+        private int CalculateYears()
         {
-            if(this.birth.Year!=DateTime.Today.Year && this.birth.Month<=DateTime.Today.Month 
-                && this.birth.Day > DateTime.Today.Day) return DateTime.Today.Year - this.birth.Year-1;
-            else return DateTime.Today.Year - this.birth.Year;
+            if (birth.Year != DateTime.Today.Year && birth.Month <= DateTime.Today.Month
+                                                  && birth.Day > DateTime.Today.Day)
+                return DateTime.Today.Year - birth.Year - 1;
+            else return DateTime.Today.Year - birth.Year;
         }
 
-        public String calculateWesternSign()
+        private void CalculateWesternSign()
         {
-            if (this.birth.Day >= 21 && this.birth.Month == 3 || this.birth.Day <= 19 && this.birth.Month == 4) this.westernSign = "Aries";
-            if (this.birth.Day >= 20 && this.birth.Month == 4 || this.birth.Day <= 20 && this.birth.Month == 5) this.westernSign = "Taurus";
-            if (this.birth.Day >= 21 && this.birth.Month == 5 || this.birth.Day <= 20 && this.birth.Month == 6) this.westernSign = "Gemini";
-            if (this.birth.Day >= 21 && this.birth.Month == 6 || this.birth.Day <= 22 && this.birth.Month == 7) this.westernSign = "Cancer";
-            if (this.birth.Day >= 23 && this.birth.Month == 7 || this.birth.Day <= 22 && this.birth.Month == 8) this.westernSign = "Leo";
-            if (this.birth.Day >= 23 && this.birth.Month == 8 || this.birth.Day <= 22 && this.birth.Month == 9) this.westernSign = "Virgo";
-            if (this.birth.Day >= 23 && this.birth.Month == 9 || this.birth.Day <= 22 && this.birth.Month == 10) this.westernSign = "Libra";
-            if (this.birth.Day >= 23 && this.birth.Month == 10 || this.birth.Day <= 21 && this.birth.Month == 11) this.westernSign = "Scorpio";
-            if (this.birth.Day >= 22 && this.birth.Month == 11 || this.birth.Day <= 21 && this.birth.Month == 12) this.westernSign = "Saggitarius";
-            if (this.birth.Day >= 22 && this.birth.Month == 12 || this.birth.Day <= 19 && this.birth.Month == 1) this.westernSign = "Capricorn";
-            if (this.birth.Day >= 20 && this.birth.Month == 1 || this.birth.Day <= 18 && this.birth.Month == 2) this.westernSign = "Aquaris";
-            if (this.birth.Day >= 19 && this.birth.Month == 2 || this.birth.Day <= 20 && this.birth.Month == 3) this.westernSign = "Pisces";
-
-            return null;
+            if (birth.Day >= 21 && birth.Month == 3 || birth.Day <= 19 && birth.Month == 4) westernSign = "Aries";
+            if (birth.Day >= 20 && birth.Month == 4 || birth.Day <= 20 && birth.Month == 5) westernSign = "Taurus";
+            if (birth.Day >= 21 && birth.Month == 5 || birth.Day <= 20 && birth.Month == 6) westernSign = "Gemini";
+            if (birth.Day >= 21 && birth.Month == 6 || birth.Day <= 22 && birth.Month == 7) westernSign = "Cancer";
+            if (birth.Day >= 23 && birth.Month == 7 || birth.Day <= 22 && birth.Month == 8) westernSign = "Leo";
+            if (birth.Day >= 23 && birth.Month == 8 || birth.Day <= 22 && birth.Month == 9) westernSign = "Virgo";
+            if (birth.Day >= 23 && birth.Month == 9 || birth.Day <= 22 && birth.Month == 10) westernSign = "Libra";
+            if (birth.Day >= 23 && birth.Month == 10 || birth.Day <= 21 && birth.Month == 11) westernSign = "Scorpio";
+            if (birth.Day >= 22 && birth.Month == 11 || birth.Day <= 21 && birth.Month == 12)
+                westernSign = "Saggitarius";
+            if (birth.Day >= 22 && birth.Month == 12 || birth.Day <= 19 && birth.Month == 1) westernSign = "Capricorn";
+            if (birth.Day >= 20 && birth.Month == 1 || birth.Day <= 18 && birth.Month == 2) westernSign = "Aquaris";
+            if (birth.Day >= 19 && birth.Month == 2 || birth.Day <= 20 && birth.Month == 3) westernSign = "Pisces";
         }
-            
-        public void calculateChineseSign()
+
+        private void CalculateChineseSign()
         {
-            for (int i=0;i<15; i++)
+            for (var i = 0; i < 15; i++)
             {
-                if (this.birth.Year == 1900 + 12 * i) this.chineseSign = "Mouse";
-                if (this.birth.Year == 1901 + 12 * i) this.chineseSign = "Bull";
-                if (this.birth.Year == 1902 + 12 * i) this.chineseSign = "Tiger";
-                if (this.birth.Year == 1903 + 12 * i) this.chineseSign = "Rabbit";
-                if (this.birth.Year == 1904 + 12 * i) this.chineseSign = "Dragon";
-                if (this.birth.Year == 1905 + 12 * i) this.chineseSign = "Shake";
-                if (this.birth.Year == 1906 + 12 * i) this.chineseSign = "Horse";
-                if (this.birth.Year == 1907 + 12 * i) this.chineseSign = "Sheep";
-                if (this.birth.Year == 1908 + 12 * i) this.chineseSign = "Monkey";
-                if (this.birth.Year == 1909 + 12 * i) this.chineseSign = "Rooster";
-                if (this.birth.Year == 1910 + 12 * i) this.chineseSign = "Dog";
-                if (this.birth.Year == 1911 + 12 * i) this.chineseSign = "Boar";
+                if (birth.Year == 1900 + 12 * i) chineseSign = "Mouse";
+                if (birth.Year == 1901 + 12 * i) chineseSign = "Bull";
+                if (birth.Year == 1902 + 12 * i) chineseSign = "Tiger";
+                if (birth.Year == 1903 + 12 * i) chineseSign = "Rabbit";
+                if (birth.Year == 1904 + 12 * i) chineseSign = "Dragon";
+                if (birth.Year == 1905 + 12 * i) chineseSign = "Shake";
+                if (birth.Year == 1906 + 12 * i) chineseSign = "Horse";
+                if (birth.Year == 1907 + 12 * i) chineseSign = "Sheep";
+                if (birth.Year == 1908 + 12 * i) chineseSign = "Monkey";
+                if (birth.Year == 1909 + 12 * i) chineseSign = "Rooster";
+                if (birth.Year == 1910 + 12 * i) chineseSign = "Dog";
+                if (birth.Year == 1911 + 12 * i) chineseSign = "Boar";
             }
-            
         }
-
     }
 }

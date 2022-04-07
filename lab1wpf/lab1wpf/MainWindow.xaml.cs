@@ -15,8 +15,6 @@ using System.Windows.Shapes;
 
 namespace lab1wpf
 {
-   
-    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -26,15 +24,34 @@ namespace lab1wpf
         {
             InitializeComponent();
             DatePicker1.SelectedDate = DateTime.Today.AddDays(-1);
+            BirthText.Text = "Pick a date!";
         }
 
         private void DateButtonClicked(object sender, RoutedEventArgs e)
-        { 
-                Person person = new Person(DatePicker1.SelectedDate.Value);
-                if (person.birth > DateTime.Today || person.birth.Year < 1900) MessageBox.Show("Invalid date");
-                if (person.birth.Day==DateTime.Today.Day && person.birth.Month == DateTime.Today.Month) BirthText.Text = "Happy Birthday!\nYou are " + person.CalculateYears().ToString() + " years old\nYour Chinese sign is "+person.chineseSign+"\nYour Western sign is "+person.westernSign;
-                else BirthText.Text = "You are "+person.CalculateYears().ToString()+" years old\nYour Chinese sign is " + person.chineseSign + "\nYour Western sign is " + person.westernSign;
-            
+        {
+            /*
+            //Creating a person
+            var person = new Person(DatePicker1.SelectedDate.Value);
+            //Invalid date of birth check
+            if (person.birth > DateTime.Today || person.birth.Year < 1900)
+            {
+                MessageBox.Show("Invalid date");
+                BirthText.Text = "";
+            }
+            //Checking for birthday
+            else if (person.birth.Day == DateTime.Today.Day && person.birth.Month == DateTime.Today.Month)
+            {
+                BirthText.Text = "Happy Birthday!\nYou are " + person.CalculateYears().ToString() +
+                                 " years old\nYour Chinese sign is " + person.chineseSign + "\nYour Western sign is " +
+                                 person.westernSign;
+            }
+            //Ordinary text
+            else
+            {
+                BirthText.Text = "You are " + person.CalculateYears().ToString() + " years old\nYour Chinese sign is " +
+                                 person.chineseSign + "\nYour Western sign is " + person.westernSign;
+            }
+            */
         }
     }
 }
